@@ -25,7 +25,7 @@ wget https://github.com/microsoft/cascadia-code/releases/download/v2005.15/Casca
 unzip CascadiaCode_2005.15.zip
 
 # Add the plugins to zsh config
-sed -i '/plugins=\{git/zsh-autosuggestions' ~/.zshrc
+cp zshrc ~/.zshrc
 
 # [Optional] Uncomment if you want powerline
 # sudo apt-get install fonts-powerline
