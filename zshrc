@@ -16,7 +16,7 @@ COMPLETION_WAITING_DOTS="true"
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="[%f/%m/%y] %T [UTC]"
 
 # Plugins for oh-my-zsh 
 plugins=(git
