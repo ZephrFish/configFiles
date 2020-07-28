@@ -47,3 +47,15 @@ alias crtsh="crtsh"
 
 # Timestamps
 PROMPT='%{$fg[green]%}[%D{%f/%m/%y}  %T]'$PROMPT
+
+# Additional Aliases
+alias l.='ls -d .* --color=auto'
+alias lt='ls --human-readable --size -1 -S --classify --color=auto'
+alias filesize='wc -c'
+alias bc='bc -l'
+alias diff='colordiff'
+alias h='history'
+alias j='jobs -l'
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowdate='date +"%d-%m-%Y"'
