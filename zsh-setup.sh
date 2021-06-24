@@ -6,17 +6,11 @@
 # Download oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Add the plugins to zsh config
-cp zshrc ~/.zshrc
-
 # Setup Plugins
 # Autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-echo "Now go add zsh-autosuggestions under ~/.zshrc plugins section"
-
-# Syntax Highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-echo "Now go add zsh-syntax-highlighting under ~/.zshrc plugins section"
+sed -i '' -e  "s/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/" ~/.zshrc
 
 # Add additional theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -27,6 +21,8 @@ cd /tmp/
 wget https://github.com/microsoft/cascadia-code/releases/download/v2005.15/CascadiaCode_2005.15.zip
 unzip CascadiaCode_2005.15.zip
 
+# [Optional] Uncomment if you want additional aliases in zsh config
+# cp zshrc ~/.zshrc
 
 
 # [Optional] Uncomment if you want powerline
