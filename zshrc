@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/zephr/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -23,44 +23,47 @@ COMPLETION_WAITING_DOTS="true"
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-HIST_STAMPS="[%f/%m/%y] %T [UTC]"
+HIST_STAMPS="[%f/%m/%y] %T"
 
 # Plugins for oh-my-zsh
 plugins=(git
 zsh-autosuggestions
 zsh-syntax-highlighting
+sudo
+extract
 )
 
 source $ZSH/oh-my-zsh.sh
 
+# zoxide (smarter cd - jump to frequent dirs with 'z')
+eval "$(zoxide init zsh)"
+
+# fzf (fuzzy finder - Ctrl+R history, Ctrl+T files)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # User configuration
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nano'
-else
-  export EDITOR='nano'
-fi
+# Preferred editor
+export EDITOR='nano'
 
 # Aliases
 alias zshconfig="nano ~/.zshrc"
-alias ohmyzsh="nano ~/.oh-my-zsh"
+alias ohmyzsh="cd ~/.oh-my-zsh"
 
 # Custom Functions
 function crtsh(){
         curl -sk "https://crt.sh/?q=%25.$1&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u
 }
-alias crtsh="crtsh"
-
-# Timestamps
-PROMPT='%{$fg[green]%}[%D{%f/%m/%y}  %T]'$PROMPT
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Styx Aliases
-alias l.='ls -d .* --color=auto'
-alias lt='ls --human-readable --size -1 -S --classify --color=auto'
+alias ls='eza'
+alias l.='eza -d .*'
+alias ll='eza -la'
+alias lt='eza -1 --sort=size'
+alias cat='bat --pager=never'
 alias filesize='wc -c'
 alias bc='bc -l'
 alias diff='colordiff'
@@ -89,7 +92,7 @@ alias chgrp='chgrp --preserve-root'
 
 function rcons
 {
-    netstat -tn | awk '{print $5}' | egrep -v '(localhost|\*\:\*|Address|and|servers|fff|127\.0\.0)'
+    netstat -tn | awk '{print $5}' | grep -Ev '(localhost|\*\:\*|Address|and|servers|fff|127\.0\.0)'
 }
 
 # Add an "chk" point, so you can return to a directory that you are jumping back and forth from.
@@ -98,44 +101,12 @@ alias chkdel='unalias chk && alias chk="echo No check point set: chkset to set c
 
 
 
-alias fuck="sudo !!"
+fuck() { sudo $(fc -ln -1) }
 
 # Additional Functions
-function extract {
- if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-    return 1
- else
-    for n in $@
-    do
-      if [ -f "$n" ] ; then
-          case "${n%,}" in
-            *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                         tar xvf "$n"       ;;
-            *.lzma)      unlzma ./"$n"      ;;
-            *.bz2)       bunzip2 ./"$n"     ;;
-            *.rar)       unrar x -ad ./"$n" ;;
-            *.gz)        gunzip ./"$n"      ;;
-            *.zip)       unzip ./"$n"       ;;
-            *.z)         uncompress ./"$n"  ;;
-            *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
-                         7z x ./"$n"        ;;
-            *.xz)        unxz ./"$n"        ;;
-            *.exe)       cabextract ./"$n"  ;;
-            *)
-                         echo "extract: '$n' - unknown archive method"
-                         return 1
-                         ;;
-          esac
-      else
-          echo "'$n' - file does not exist"
-          return 1
-      fi
-    done
-fi
-}
+function mkcd() { mkdir -p "$1" && cd "$1" }
+function myip() { curl -s ifconfig.me && echo }
+function listening() { ss -tlnp 2>/dev/null || lsof -iTCP -sTCP:LISTEN -P -n }
 
 # "chkset" sets the current directory as a check point
 # "chkdel" clears the set check point and returns it to blank

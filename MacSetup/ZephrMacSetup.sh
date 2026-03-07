@@ -29,4 +29,9 @@ sed -i '' -e  "s/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highl
 # Add additional theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 echo "Setting Theme to Powerlevel"
-sed -i '' -e 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k/powerlevel10k"/' ~/.zshrc 
+sed -i '' 's|ZSH_THEME="robbyrussell"|ZSH_THEME="powerlevel10k/powerlevel10k"|' ~/.zshrc
+
+# Install modern CLI tools
+echo "Installing modern CLI tools"
+brew install eza bat fzf zoxide httpie
+$(brew --prefix)/opt/fzf/install --all --no-bash --no-fish

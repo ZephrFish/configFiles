@@ -17,6 +17,5 @@ I've setup some bits and pieces on my windows terminal env too, included the pro
 ### Plugins in use
 - zsh-autosuggestions
 - zsh-syntax-highlighting
-- byobu
 
 
