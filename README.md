@@ -1,7 +1,17 @@
 # configFiles
-Setup and deployment scripts for oh my zsh prompt and config :-)
+Setup and deployment scripts for shell, terminal, and tooling config across hosts.
 
-## Description
+## Directory Structure
+
+| Directory/File | Purpose |
+|---------------|---------|
+| `claude/` | Claude Code portability — RAPTOR, SuperClaude, and Lab Controller setup |
+| `MacSetup/` | macOS-specific setup |
+| `zsh-setup.sh` | Zsh + Oh My Zsh + plugins installer |
+| `zshrc` | Zsh config |
+| `windowsTerm_profile.json` | Windows Terminal profile |
+
+## Zsh Setup
 `zsh-setup.sh` will install zsh and the plugins, along with some other setup :-)
 
 ## Windows Terminal Config
